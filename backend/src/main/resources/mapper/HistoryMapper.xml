@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.backend.mapper.HistoryMapper">
+
+    <select id="getHistory" resultType="org.manage.backend.entity.History">
+        SELECT * FROM history WHERE visible=TRUE ORDER BY startTime DESC
+    </select>
+
+    <insert id="insertHistory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO history (startTime, endTime, workTime, pauseTimes, pomodoroCount)
+        VALUES (#{startTime}, #{endTime}, #{workTime}, #{pauseTimes}, #{pomodoroCount})
+    </insert>
+
+    <update id="deleteHistory">
+        UPDATE history SET visible=FALSE WHERE id=#{id}
+    </update>
+
+</mapper>

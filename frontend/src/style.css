@@ -1,0 +1,199 @@
+/* ============================================
+   全局样式：颜色主题变量 + 基础样式
+   全站的"主题色"都定义在 :root 里，改一处全站变
+
+   深色模式：由 JS 在 <html> 上写 data-theme="dark" 触发，
+            对应下面 :root[data-theme='dark'] 那一块
+   ============================================ */
+:root {
+  /* ---------- 品牌色：两种模式共用，不用改 ---------- */
+  --primary: #e74c3c;          /* 主题色：番茄红 */
+  --primary-dark: #c0392b;     /* hover 用的深红 */
+  --green: #27ae60;            /* 完成 / 短休息 */
+  --green-dark: #1e8449;
+  --blue: #2980b9;             /* 长休息 */
+  --blue-dark: #1f618d;
+
+  /* ---------- 页面与卡片 ---------- */
+  --bg: #f4f5f7;               /* 页面背景 */
+  --bg-gradient: linear-gradient(135deg, #f4f5f7 0%, #eef1f5 100%);
+  --card: #ffffff;             /* 卡片背景 */
+  --card-hover: #fafafa;
+
+  /* ---------- 文字 ---------- */
+  --text: #2c3e50;             /* 主文字色 */
+  --text-light: #7f8c8d;       /* 次要文字色 */
+
+  /* ---------- 边框与阴影 ---------- */
+  --border: #e8eaed;           /* 边框色 */
+  --border-strong: #c3c9cf;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.2);
+  --shadow-ring: 0 12px 32px rgba(0, 0, 0, 0.1);
+
+  /* ---------- 控件状态 ---------- */
+  --disabled-bg: #d5d8dc;
+  --danger-border: #f3c1bd;
+  --danger-bg: #fdecea;
+
+  /* ---------- 侧边栏 / 标题栏（方案 A：两种模式保持一致） ---------- */
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #ffffff;
+  --sidebar-text-dim: #aab3c0;
+  --sidebar-text-faint: #6b7280;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-divider: rgba(255, 255, 255, 0.08);
+  --nav-active-bg: rgba(231, 76, 60, 0.15);
+
+  /* ---------- 状态色块 ---------- */
+  --success-bg: #e8f8f0;
+  --warn-bg: #fef5e7;
+  --warn-text: #e67e22;
+
+  /* ---------- 其他 ---------- */
+  --ring-track: #e9ecef;
+  --overlay: rgba(0, 0, 0, 0.45);
+}
+
+/* ============================================
+   深色模式覆盖
+   为什么选择器写 :root[data-theme='dark'] 而不是 [data-theme='dark']？
+   因为 :root 本身带权重，同权重时只能靠"谁在后面"决定胜负，太脆弱；
+   加上 :root 前缀权重更高，一定能压过上面那块。
+   另外：这一块必须放在浅色块之后（CSS 从上往下覆盖）。
+   ============================================ */
+:root[data-theme='dark'] {
+  --bg: #0f172a;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #131d33 100%);
+  --card: #1b2537;
+  --card-hover: #22304a;
+
+  --text: #e6edf6;
+  --text-light: #94a3b8;
+
+  --border: #2b3a52;
+  --border-strong: #3d4f6d;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --shadow-ring: 0 12px 32px rgba(0, 0, 0, 0.5);
+
+  --disabled-bg: #37455e;
+  --danger-border: #7f3b36;
+  --danger-bg: #3a1f1d;
+
+  --success-bg: #14342a;
+  --warn-bg: #3a2c14;
+  --warn-text: #f0a94c;
+
+  --ring-track: #2b3a52;
+  --overlay: rgba(0, 0, 0, 0.65);
+}
+
+/* 清掉浏览器默认的内外边距，统一盒模型 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg-gradient);
+  font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100%;
+}
+
+/* ---------- 全站通用按钮 ---------- */
+button {
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;                /* 红底白字：属于品牌色，两种模式都不用改 */
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+.btn-primary:disabled {
+  background: var(--disabled-bg);
+  cursor: not-allowed;
+}
+
+.btn-success {
+  background: var(--green);
+  color: #fff;                /* 绿底白字：同上 */
+}
+.btn-success:hover:not(:disabled) {
+  background: var(--green-dark);
+}
+
+.btn-ghost {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  border-color: var(--border-strong);
+  background: var(--card-hover);
+}
+
+.btn-danger {
+  background: var(--card);
+  color: var(--primary);
+  border: 1px solid var(--danger-border);
+}
+.btn-danger:hover {
+  background: var(--danger-bg);
+}
+
+/* 小号按钮 */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* ---------- 全站通用输入框 ---------- */
+input {
+  font-family: inherit;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--card);
+  outline: none;
+  transition: border-color 0.2s;
+}
+input:focus {
+  border-color: var(--primary);
+}
+
+/* ---------- 各页面共用 ---------- */
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.empty-tip {
+  text-align: center;
+  color: var(--text-light);
+  padding: 48px 0;
+  font-size: 14px;
+}

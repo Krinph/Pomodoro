@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>番茄钟</title>
+    <script>
+      // 在页面开始渲染之前就把主题定下来，避免深色模式下"先白闪一下再变黑"。
+      // 必须内联写在 <head> 里 —— 如果放到 main.js 就太晚了，那时页面已经渲染过。
+      // ⚠️ 这里的键名要和 src/composables/useTheme.js 里的 STORAGE_KEY 保持一致。
+      ;(function () {
+        try {
+          var mode = localStorage.getItem('tomatoclock-theme-mode') || 'system'
+          var dark =
+            mode === 'dark' ||
+            (mode === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
+        } catch (e) {
+          // localStorage 不可用（隐私模式等）时不阻塞页面
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

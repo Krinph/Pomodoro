@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.backend.mapper.TaskMapper">
+
+    <select id="selectTasks" resultType="org.manage.backend.entity.Task">
+        SELECT * FROM task
+    </select>
+
+    <insert id="InsertTask">
+        INSERT INTO task (title, description, status, deadline)
+        VALUES (#{title}, #{description}, #{status}, #{deadline})
+    </insert>
+
+    <update id="UpdateTask">
+        UPDATE task
+        SET title=#{title}, description=#{description}, status=#{status}, deadline=#{deadline}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="DeleteTask">
+        DELETE FROM task WHERE id=#{id}
+    </delete>
+</mapper>
